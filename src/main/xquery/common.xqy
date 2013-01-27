@@ -112,7 +112,8 @@ declare function common:create-navlink($href as xs:string, $name as xs:string, $
 declare function common:create-navlinks(){
 element p {attribute class {"right"}, 
     common:create-navlink("/", "Home", false()),
-    common:create-navlink("/logout.xqy", "Logout", true()) 
+    common:create-navlink("/dashboard.xqy", "Dashboard", true())
+    (: common:create-navlink("/logout.xqy", "Logout", true()) :)
 }  
 };
 
@@ -121,9 +122,9 @@ element div {attribute id {"page-header"},
     element div {attribute id {"header"}, attribute class {"span-24 last"},
         element h1 {$header}
     },
-   (: element hr {},
-    element div {attribute id {"subheader"}, attribute class {"span-12"}, common:show-current-user()},    
-    element div {attribute id {"subheader"}, attribute class {"span-12 last"}, common:create-navlinks()}, :)      
+    element hr {},
+    (: element div {attribute id {"subheader"}, attribute class {"span-12"}, common:show-current-user()}, :)    
+    element div {attribute id {"subheader"}, attribute class {"span-24 last"}, common:create-navlinks()},       
     element hr {}
 } 
 };

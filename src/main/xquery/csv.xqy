@@ -2,8 +2,8 @@ xquery version "1.0-ml";
 
 import module namespace csv = "http://www.example.com/csv" at "/lib-csv.xqy";
 
-declare variable $zip := xdmp:get-server-field("zip");
-declare variable $filename := "test.csv";
+declare variable $zip := xdmp:get-session-field("zip");
+declare variable $filename := concat("output-",fn:current-dateTime(),".csv");
 
 
 (xdmp:set-response-content-type("application/csv"),

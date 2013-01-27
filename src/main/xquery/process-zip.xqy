@@ -6,8 +6,15 @@ declare namespace zip="xdmp:zip";
 
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
     
-declare variable $zip := xdmp:set-server-field("zip", xdmp:get-request-field("zipfile"));
+declare variable $zip := xdmp:set-session-field("zip", xdmp:get-request-field("zipfile"));
+declare variable $collection := xdmp:set-session-field("collection", xdmp:get-request-field("collection"));
 declare variable $manifest := xdmp:zip-manifest($zip);
+
+declare function local:pre-check() {
+    if(string-length($collection) eq 0 or empty($zip))
+    then(xdmp:set-session-field("validation-error", "Please ensure you have specified the path to a zip file (this must be readable) and a collection name"), xdmp:redirect-response("/"))
+    else(xdmp:set-session-field("validation-error", ""))
+};
 
 declare function local:overview(){
 <div id="overview">
@@ -49,7 +56,7 @@ declare function local:get-parts-from-zip-manifest(){
     	</options>) :)
 };
 
-(common:build-page(
+(local:pre-check(), common:build-page(
 element div {attribute class {"container"},
     common:html-page-header("Polar Tools - Processing Zip File"),
     local:overview(),
