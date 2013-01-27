@@ -20,12 +20,24 @@ element PolarHrmData {
 }
 };
 
+declare function local:parse-date($date as xs:string) as xs:date {
+    xs:date(concat(fn:substring($date, 1, 4),"-",fn:substring($date, 5, 2),"-",fn:substring($date, 7, 2)))
+};
+
+(: TODO - Script creation of xs:date and xs:time range indexes :)
 declare function local:get-params($item){
     let $section := substring-before($item, "[Note]")
     return 
     for $line in common:tokenize-lines($section)
     where contains($line, "=")
-    return common:create-element(substring-before($line,"="),substring-after($line,"=")) 
+    return 
+    if (substring-before($line,"=") eq "Date")
+    then (let $xsdate := local:parse-date(substring-after($line,"="))
+    return 
+    common:create-element(substring-before($line,"="), $xsdate)
+    ) else if ( contains(substring-before($line,"="),"Length") or substring-before($line,"=") eq "StartTime")
+    then (common:create-element(substring-before($line,"="), xs:time(substring-after($line,"=")))) 
+    else (common:create-element(substring-before($line,"="),substring-after($line,"=")))
 };
 
 declare function local:get-heartrates($item){

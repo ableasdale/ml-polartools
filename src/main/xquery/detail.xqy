@@ -17,7 +17,8 @@ element div {attribute id {"overview"},
     element li {element strong {"Length: "}, $doc/PolarHrmData/Length},
     element li {element strong {"Maximum Heartrate: "}, $doc/PolarHrmData/MaxHR},
     element li {element strong {"Resting Heartrate: "}, $doc/PolarHrmData/RestHR},
-    element li {element strong {"VO2 Max: "}, $doc/PolarHrmData/VO2max}
+    element li {element strong {"VO2 Max: "}, $doc/PolarHrmData/VO2max},
+    element li {element strong {"Weight: "}, $doc/PolarHrmData/Weight}
     },
     element hr {},
     element h2 {"Data Output Formats"},
