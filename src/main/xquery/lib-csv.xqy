@@ -23,9 +23,7 @@ declare function csv:generate-document($zipfile) {
 };
 
 declare function csv:pad-line($line as xs:string, $line-count as xs:unsignedLong, $max as xs:unsignedLong) as xs:string {
- let $padding := for $i in $line-count to $max
- return string-join("0",",")
- return concat($line, $padding)
+    string-join (($line, for $i in ($line-count to $max - 1) return "0,") , '')
 };
 
 declare function csv:find-longest-column($doc) as xs:unsignedLong {
