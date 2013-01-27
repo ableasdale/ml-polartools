@@ -7,12 +7,38 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 declare namespace zip="xdmp:zip";
 
-declare function csv:unzip-data($zipfile){
-for $x in xdmp:zip-manifest($zipfile)//zip:part/text()
-where (fn:ends-with($x, ".hrm"))
-order by $x ascending
-return
-(   string-join( (csv:process-record($zipfile, $x), csv:process-heartrates($zipfile, $x)), ",") )
+
+declare function csv:generate-document($zipfile) {
+    let $original-document := csv:generate-unpadded-document($zipfile)
+    return
+    
+    let $longest := csv:find-longest-column($original-document)
+    return
+    
+    let $updated :=
+    for $line in $original-document
+    return csv:pad-line($line, count(tokenize($line, ",")), $longest)
+    return $updated
+    
+};
+
+declare function csv:pad-line($line as xs:string, $line-count as xs:unsignedLong, $max as xs:unsignedLong) as xs:string {
+ let $padding := for $i in $line-count to $max
+ return string-join("0",",")
+ return concat($line, $padding)
+};
+
+declare function csv:find-longest-column($doc) as xs:unsignedLong {
+   let $ordered := for $line in $doc
+   return max(count(tokenize($line, ",")))
+   return $ordered[1]
+};
+
+declare function csv:generate-unpadded-document($zipfile) as xs:string+ {
+    for $x in xdmp:zip-manifest($zipfile)//zip:part/text()
+    where (fn:ends-with($x, ".hrm"))
+    order by $x ascending
+    return replace(string-join( (csv:process-record($zipfile, $x), csv:process-heartrates($zipfile, $x)), ","),",,", ",") 
 };
 
 declare function csv:process-record($zipfile, $x as xs:string){
@@ -24,7 +50,6 @@ declare function csv:process-record($zipfile, $x as xs:string){
   where csv:is-useful($line)
   return 
   substring-after($line,"=")
-
 };
 
 declare function csv:is-useful($arg){

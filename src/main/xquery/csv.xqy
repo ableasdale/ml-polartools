@@ -8,6 +8,4 @@ declare variable $filename := "test.csv";
 
 (xdmp:set-response-content-type("application/csv"),
 xdmp:add-response-header("Content-Disposition", fn:concat("attachment; filename=", $filename)),
-
-(: Content-Disposition: attachment; filename="fname.ext" :)
- csv:unzip-data($zip))
+csv:generate-document($zip))
