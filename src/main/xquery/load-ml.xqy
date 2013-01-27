@@ -2,7 +2,7 @@ xquery version "1.0-ml";
 
 (: 
 
-MarkLogic loader / processer 
+MarkLogic loader / processor 
 Converts an individual hrm (text) file into XML and inserts into ML
 
 :)
