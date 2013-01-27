@@ -51,6 +51,7 @@ xdmp:set-response-content-type("text/html; charset=utf-8"),
 common:html-page-enclosure($html)
 };
 
+(: TODO - fix this so all the highcharts JS is not on every page :)
 declare function common:html-head() {
 element link {attribute rel {"stylesheet"}, attribute type{"text/css"}, attribute href {"http://www.blueprintcss.org/blueprint/screen.css"}},
 element script {attribute src {"http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}, attribute type {"text/javascript"}, " "},
@@ -68,18 +69,18 @@ $(document).ready(function() {
          title: {
             text: 'Heart Rate Profile'
          },
-         /* xAxis: {
-            categories: ['Apples', 'Bananas', 'Oranges']
+         xAxis: {
+            text: 'Time (based on interval'
          },
          yAxis: {
             title: {
-               text: 'Fruit eaten'
+               text: 'Heart rate reading'
             }
-         }, */
+         },
          series: [{
             name: 'Name',
             data: []]>
-           {for $i in doc(xdmp:get-request-field("id"))/polar/heartrate-readings/heartrate-reading/text()
+           {for $i in doc(xdmp:get-request-field("id"))/PolarHrmData/HeartRateReadings/HeartRateReading/text()
            return concat($i, ",")}
             <![CDATA[]
          } 

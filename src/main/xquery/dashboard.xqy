@@ -17,11 +17,11 @@ for $i in doc()
 order by $i/polar/Date
 return 
 <tr>
-<td>{$i/polar/Date}</td>
-<td>{$i/polar/StartTime}</td>
-<td>{$i/polar/Length}</td>
+<td>{$i/PolarHrmData/Date}</td>
+<td>{$i/PolarHrmData/StartTime}</td>
+<td>{$i/PolarHrmData/Length}</td>
 <td>{
-element a {attribute href { fn:concat("/view.xqy?id=", xdmp:node-uri($i)) }}, "View"
+element a {attribute href { fn:concat("/detail.xqy?id=", xdmp:node-uri($i)) }}, "Details"
 }
 </td>
 </tr>

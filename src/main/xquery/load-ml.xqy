@@ -14,7 +14,7 @@ declare variable $zip := xdmp:get-server-field("zip");
 
 
 declare function local:as-xml($item){
-element polar {
+element PolarHrmData {
     local:get-params($item),
     local:get-heartrates($item)
 }
@@ -29,9 +29,10 @@ declare function local:get-params($item){
 };
 
 declare function local:get-heartrates($item){
- element heartrate-readings {
+ element HeartRateReadings {
    for $i in common:tokenize-lines(substring-after($item, "[HRData]"))
-   return common:create-element("heartrate-reading", $i)
+   where string-length($i) ge 1
+   return common:create-element("HeartRateReading", $i)
 }   
 };
 
