@@ -13,12 +13,13 @@ at "/MarkLogic/admin.xqy";
 declare variable $PORT as xs:integer := 9995;
 declare variable $FILE-PATH as xs:string := "C:\Users\YOUR-NAME-HERE\workspace\ml-polartools\src\main\xquery";
 
-(: TODO - create separate database for this - rather than Documents :)
+(: TODO - create separate Polar database for this - configure with the Collection Lexicon enabled :)
+(: TODO - initial permissions (nobody) inadequate to use the application :)
 
 declare function local:create-http-application-server() {
   let $config := admin:get-configuration()
   let $config := admin:http-server-create($config, admin:group-get-id($config, "Default"), concat("http-", $PORT),
-        $FILE-PATH, $PORT, 0, xdmp:database("Documents") )
+        $FILE-PATH, $PORT, 0, xdmp:database("Polar") )
   let $config := admin:appserver-set-authentication($config,
          admin:appserver-get-id($config, admin:group-get-id($config, "Default"), concat("http-", $PORT)),
          "application-level")
