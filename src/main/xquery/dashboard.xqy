@@ -21,6 +21,8 @@ declare function local:original-zip() {
  element p {element a {attribute href {concat("/get-zip.xqy?id=", xdmp:node-uri($i))}, xdmp:node-uri($i)}}
 };
 
+(: anything less than a minute is discarded / todo - placed in another table? :)
+
 declare function local:table(){
 <table>
 <tr>
@@ -34,6 +36,7 @@ declare function local:table(){
 </tr>
 {
 for $i in collection($collection)/PolarHrmData/..
+where $i/PolarHrmData/Length gt xs:time("00:01:00")
 order by $i/polar/Date
 return 
 <tr>
