@@ -29,7 +29,7 @@ declare function csv:pad-line($line as xs:string, $line-count as xs:unsignedLong
 declare function csv:find-longest-column($doc) as xs:unsignedLong {
    let $ordered := for $line in $doc
    return max(count(tokenize($line, ",")))
-   return $ordered[1]
+   return max($ordered)
 };
 
 declare function csv:generate-unpadded-document($zipfile) as xs:string+ {

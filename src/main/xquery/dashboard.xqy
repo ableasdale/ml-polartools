@@ -13,6 +13,14 @@ then (xdmp:set-session-field("collection", xdmp:get-request-field("change-collec
 else (xdmp:get-session-field("collection"))
 };
 
+declare function local:original-zip() {
+ element h3 {"Download Polar ProTrainer Zip File"},
+ for $i in collection($collection)
+ where ends-with(xdmp:node-uri($i), ".zip")
+ return
+ element p {element a {attribute href {concat("/get-zip.xqy?id=", xdmp:node-uri($i))}, xdmp:node-uri($i)}}
+};
+
 declare function local:table(){
 <table>
 <tr>
@@ -25,7 +33,7 @@ declare function local:table(){
 <th>Details</th>
 </tr>
 {
-for $i in collection($collection)
+for $i in collection($collection)/PolarHrmData/..
 order by $i/polar/Date
 return 
 <tr>
@@ -48,6 +56,8 @@ common:build-page(
 element div {attribute class {"container"},
     common:html-page-header("Polar ProTrainer Tools : Dashboard"),
     element h3 {"Current Collection: ", $collection},
+    element div {local:original-zip()},
+    element h3 {"Exercise records:"},
     element div {local:table()},
     common:html-page-footer()
 })

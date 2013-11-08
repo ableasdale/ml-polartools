@@ -131,7 +131,8 @@ element div {attribute id {"page-header"},
  
 declare function common:html-page-footer() as element(div){
 element div {attribute id {"footer"},   
-    element p {attribute align {"center"}, "Application footer"},
+    element hr {},
+    element p {attribute align {"center"}, "ML-PolarTools - Version 0.1 - November 2013"},
     element hr {}
 }   
 }; 
