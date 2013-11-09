@@ -66,7 +66,7 @@ xdmp:document-insert(common:guid(), local:as-xml(xdmp:zip-get($zip, $x, <options
 (
     (: Load the zip into the stand along with everything else - these are very small files - so no bothering with Large Binaries... :)
     xdmp:document-insert(
-        concat(common:guid(),".zip"), 
+        concat(xdmp:get-session-field("collection"),".zip"), 
         $zip, 
         (), 
         xdmp:get-session-field("collection")

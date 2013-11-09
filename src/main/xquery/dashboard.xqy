@@ -14,11 +14,13 @@ else (xdmp:get-session-field("collection"))
 };
 
 declare function local:original-zip() {
- element h3 {"Download Polar ProTrainer Zip File"},
- for $i in collection($collection)
- where ends-with(xdmp:node-uri($i), ".zip")
- return
- element p {element a {attribute href {concat("/get-zip.xqy?id=", xdmp:node-uri($i))}, xdmp:node-uri($i)}}
+    element fieldset {
+        element legend {"Download Polar ProTrainer Zip File(s)"},
+        for $i in collection($collection)
+        where ends-with(xdmp:node-uri($i), ".zip")
+        return
+        element p {element a {attribute href {concat("/get-zip.xqy?id=", xdmp:node-uri($i))}, xdmp:node-uri($i)}, " [", element a {attribute href {concat("/csv.xqy?id=", xdmp:node-uri($i))}, "CSV"}, "]"}
+    }    
 };
 
 (: anything less than a minute is discarded / todo - placed in another table? :)
@@ -37,7 +39,7 @@ declare function local:table(){
 {
 for $i in collection($collection)/PolarHrmData/..
 where $i/PolarHrmData/Length gt xs:time("00:01:00")
-order by xs:date($i/polar/Date)
+order by xs:date($i/PolarHrmData/Date)
 return 
 <tr>
 <td>{$i/PolarHrmData/Date}</td>
