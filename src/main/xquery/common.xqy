@@ -55,6 +55,7 @@ common:html-page-enclosure($html)
 declare function common:html-head() {
 element link {attribute rel {"stylesheet"}, attribute type{"text/css"}, attribute href {"http://www.blueprintcss.org/blueprint/screen.css"}},
 element script {attribute src {"http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}, attribute type {"text/javascript"}, " "},
+element script {attribute src {"/js/jquery.sparkline.min.js"}, attribute type {"text/javascript"}, " "},
 element script {attribute src {"/js/highcharts.js"}, attribute type {"text/javascript"}, " "},
 <script>
 <![CDATA[

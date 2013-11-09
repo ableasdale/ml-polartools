@@ -19,7 +19,7 @@ declare function local:original-zip() {
         for $i in collection($collection)
         where ends-with(xdmp:node-uri($i), ".zip")
         return
-        element p {element a {attribute href {concat("/get-zip.xqy?id=", xdmp:node-uri($i))}, xdmp:node-uri($i)}, " [", element a {attribute href {concat("/csv.xqy?id=", xdmp:node-uri($i))}, "CSV"}, "]"}
+        element p {element a {attribute href {concat("/get-zip.xqy?id=", xdmp:node-uri($i))}, xdmp:node-uri($i)}, " [ ", element a {attribute href {concat("/csv.xqy?id=", xdmp:node-uri($i))}, "CSV"}, " ] [ ", element a {attribute href {concat("/matlab-csv.xqy?id=", $collection)}, "Matlab CSV"} ," ]"}
     }    
 };
 
