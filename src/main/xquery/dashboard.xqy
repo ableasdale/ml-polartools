@@ -37,7 +37,7 @@ declare function local:table(){
 {
 for $i in collection($collection)/PolarHrmData/..
 where $i/PolarHrmData/Length gt xs:time("00:01:00")
-order by $i/polar/Date
+order by xs:date($i/polar/Date)
 return 
 <tr>
 <td>{$i/PolarHrmData/Date}</td>
