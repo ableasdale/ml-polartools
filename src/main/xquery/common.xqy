@@ -70,7 +70,9 @@ $(document).ready(function() {
             text: 'Heart Rate Profile'
          },
          xAxis: {
-            text: 'Time (based on interval'
+            title: {
+                text: 'Time (based on readings at 5 second intervals)'
+            }
          },
          yAxis: {
             title: {
@@ -78,17 +80,12 @@ $(document).ready(function() {
             }
          },
          series: [{
-            name: 'Name',
+            name: 'Heart Rate',
             data: []]>
            {for $i in doc(xdmp:get-request-field("id"))/PolarHrmData/HeartRateReadings/HeartRateReading/text()
            return concat($i, ",")}
             <![CDATA[]
-         } 
-         /*, {
-            name: 'John',
-            data: [5, 7, 3]
-         } */
-         ]
+         }]
       });
    });
 ]]>
