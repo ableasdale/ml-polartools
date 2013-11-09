@@ -51,7 +51,7 @@ declare function csv:process-record($zipfile, $x as xs:string){
 };
 
 declare function csv:is-useful($arg){
-     some $searchString in ("StartTime", "Date") satisfies contains($arg, $searchString)
+     some $searchString in ("Date", "StartTime", "Length") satisfies contains($arg, $searchString)
 };
 
 declare function csv:process-heartrates($zipfile, $x as xs:string){
