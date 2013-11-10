@@ -15,12 +15,18 @@ else (xdmp:get-session-field("collection"))
 
 declare function local:original-zip() {
     element fieldset {
-        element legend {"Download and Export: "},
+        element legend {"Download and Export data for: ", $collection},
         for $i in collection($collection)
         where ends-with(xdmp:node-uri($i), ".zip")
         return
         element p {"[ Original zip file: ", element a {attribute title {"Export the original zip file you imported to create the collection"}, attribute href {concat("/get-zip.xqy?id=", xdmp:node-uri($i))}, xdmp:node-uri($i)}, " ] [ Export data: ", element a {attribute title {"Export the data in a format suitable for Microsoft Excel (one row per record)"}, attribute href {concat("/csv.xqy?id=", xdmp:node-uri($i))}, "Excel CSV"}, " ] [ Export data: ", element a {attribute title {"Export the data in a format suitable for Matlab (one column per record)"}, attribute href {concat("/matlab-csv.xqy?id=", $collection)}, "Matlab CSV"} ," ]"}
     }    
+};
+
+declare function local:common-attributes() {
+    element fieldset {
+        element legend {"Common Attributes for : ", $collection}
+    }
 };
 
 (: anything less than a minute is discarded / todo - placed in another table? :)
@@ -31,9 +37,9 @@ declare function local:table(){
 <th>Date</th>
 <th>Start Time</th>
 <th>Length</th>
-<th>Max HR</th>
+<!-- th>Max HR</th>
 <th>Resting HR</th>
-<th>Weight</th>
+<th>Weight</th -->
 <th>Details</th>
 <th>Preview</th>
 </tr>
@@ -46,9 +52,9 @@ return
 <td>{$i/PolarHrmData/Date}</td>
 <td>{$i/PolarHrmData/StartTime}</td>
 <td>{$i/PolarHrmData/Length}</td>
-<td>{$i/PolarHrmData/MaxHR}</td>
+<!-- td>{$i/PolarHrmData/MaxHR}</td>
 <td>{$i/PolarHrmData/RestHR}</td>
-<td>{$i/PolarHrmData/Weight}</td>
+<td>{$i/PolarHrmData/Weight}</td -->
 <td>{
 element a {attribute href { fn:concat("/detail.xqy?id=", xdmp:node-uri($i)) }}, "Details"
 }
@@ -64,6 +70,7 @@ element div {attribute class {"container"},
     common:html-page-header("Polar ProTrainer Tools : Dashboard"),
     element h3 {"Current Collection: ", $collection},
     element div {local:original-zip()},
+    element div {local:common-attributes()},
     element h3 {"Exercise records:"},
     element div {local:table()},
     common:html-page-footer()
