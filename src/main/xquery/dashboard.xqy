@@ -15,11 +15,11 @@ else (xdmp:get-session-field("collection"))
 
 declare function local:original-zip() {
     element fieldset {
-        element legend {"Download Polar ProTrainer Zip File(s)"},
+        element legend {"Download and Export: "},
         for $i in collection($collection)
         where ends-with(xdmp:node-uri($i), ".zip")
         return
-        element p {element a {attribute href {concat("/get-zip.xqy?id=", xdmp:node-uri($i))}, xdmp:node-uri($i)}, " [ ", element a {attribute href {concat("/csv.xqy?id=", xdmp:node-uri($i))}, "CSV"}, " ] [ ", element a {attribute href {concat("/matlab-csv.xqy?id=", $collection)}, "Matlab CSV"} ," ]"}
+        element p {"[ Original zip file: ", element a {attribute title {"Export the original zip file you imported to create the collection"}, attribute href {concat("/get-zip.xqy?id=", xdmp:node-uri($i))}, xdmp:node-uri($i)}, " ] [ Export data: ", element a {attribute title {"Export the data in a format suitable for Microsoft Excel (one row per record)"}, attribute href {concat("/csv.xqy?id=", xdmp:node-uri($i))}, "Excel CSV"}, " ] [ Export data: ", element a {attribute title {"Export the data in a format suitable for Matlab (one column per record)"}, attribute href {concat("/matlab-csv.xqy?id=", $collection)}, "Matlab CSV"} ," ]"}
     }    
 };
 
