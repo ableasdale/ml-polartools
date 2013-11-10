@@ -32,7 +32,7 @@ declare function local:generate-matlab-csv-line($collection as xs:string, $pos a
 };  
 
 declare function local:matlab-date($date as xs:date) {
-    format-date($date, "[D]-[MNn,*-3]-[Y]", "en", (), ())
+    format-date($date, "[D01]-[MNn,*-3]-[Y]", "en", (), ())
 };
 
 (xdmp:set-response-content-type("application/csv"),
@@ -44,7 +44,7 @@ return $epoch
 return string-join($epochs, ","), :)
 
 let $dates := for $y in local:generate-matlab-csv-row($COLLECTION, "Date")
-let $date := concat("'", local:matlab-date(xs:date($y)), "'")
+let $date := local:matlab-date(xs:date($y))
 return $date
 return string-join($dates, ","),
 
