@@ -33,12 +33,18 @@ declare function local:generate-matlab-csv-line($collection as xs:string, $pos a
 
 (xdmp:set-response-content-type("application/csv"),
 xdmp:add-response-header("Content-Disposition", fn:concat("attachment; filename=", $filename)),
-(let $epochs := for $y in local:generate-matlab-csv-row($COLLECTION, "Date")
+(
+(: let $epochs := for $y in local:generate-matlab-csv-row($COLLECTION, "Date")
 let $epoch := local:date-as-epoch(xs:date($y))
+return $epoch
+return string-join($epochs, ","), :)
+
+let $epochs := for $y in local:generate-matlab-csv-row($COLLECTION, "Date")
+let $epoch := concat("'", $y, "'")
 return $epoch
 return string-join($epochs, ","),
 
-(: string-join(local:generate-matlab-csv-row($COLLECTION, "Date"), ","), :)
+(: string-join(local:generate-matlab-csv-row($COLLECTION, "Date"), ","), :) 
 string-join(local:generate-matlab-csv-row($COLLECTION, "StartTime"), ","),
 string-join(local:generate-matlab-csv-row($COLLECTION, "Length"), ","),
 for $x in 1 to local:get-largest-reading($COLLECTION)
