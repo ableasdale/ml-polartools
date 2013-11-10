@@ -3,7 +3,7 @@ xquery version "1.0-ml";
 declare variable $COLLECTION := xdmp:get-request-field("id", ());
 declare variable $filename := concat($COLLECTION,"-",fn:current-dateTime(),".csv");
 
-declare function local:date-as-epoch($date as xs:date) as xs:string {
+declare function local:date-as-unix-epoch($date as xs:date) as xs:string {
   xs:string(fn:round(( $date cast as xs:dateTime - xs:dateTime("1970-01-01T00:00:00-00:00")) div xs:dayTimeDuration('PT1S'))) 
 };
 
@@ -31,6 +31,10 @@ declare function local:generate-matlab-csv-line($collection as xs:string, $pos a
   return $row
 };  
 
+declare function local:matlab-date($date as xs:date) {
+    format-date($date, "[D]-[MNn,*-3]-[Y]", "en", (), ())
+};
+
 (xdmp:set-response-content-type("application/csv"),
 xdmp:add-response-header("Content-Disposition", fn:concat("attachment; filename=", $filename)),
 (
@@ -39,10 +43,10 @@ let $epoch := local:date-as-epoch(xs:date($y))
 return $epoch
 return string-join($epochs, ","), :)
 
-let $epochs := for $y in local:generate-matlab-csv-row($COLLECTION, "Date")
-let $epoch := concat("'", $y, "'")
-return $epoch
-return string-join($epochs, ","),
+let $dates := for $y in local:generate-matlab-csv-row($COLLECTION, "Date")
+let $date := concat("'", local:matlab-date(xs:date($y)), "'")
+return $date
+return string-join($dates, ","),
 
 (: string-join(local:generate-matlab-csv-row($COLLECTION, "Date"), ","), :) 
 string-join(local:generate-matlab-csv-row($COLLECTION, "StartTime"), ","),
