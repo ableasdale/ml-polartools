@@ -4,7 +4,7 @@ import module namespace common = "http://www.example.com/common" at "/common.xqy
 
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
-declare variable $collection := local:check-collection();
+declare variable $collection := local:check-collection(); 
 
 (: TODO - there is no error checking in this right now :)
 declare function local:check-collection(){

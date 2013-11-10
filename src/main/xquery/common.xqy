@@ -12,6 +12,9 @@ declare namespace xhtml = "http://www.w3.org/1999/xhtml";
  
 (: note that application/xhtml+xml is *still* not supported by several modern browsers... :)
  
+declare variable $TITLE as xs:string := "Polar ProTrainer Tools"; 
+declare variable $PAGE := "[TODO]";
+ 
 declare function common:tokenize-lines( $arg as xs:string? )  as xs:string* {
    tokenize($arg, '(\r\n?|\n\r?)')
 }; 
@@ -53,6 +56,7 @@ common:html-page-enclosure($html)
 
 (: TODO - fix this so all the highcharts JS is not on every page :)
 declare function common:html-head() {
+element title {xdmp:get-session-field("collection"), " : ", $PAGE ," : ", $TITLE},
 element link {attribute rel {"stylesheet"}, attribute type{"text/css"}, attribute href {"http://www.blueprintcss.org/blueprint/screen.css"}},
 element script {attribute src {"http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}, attribute type {"text/javascript"}, " "},
 element script {attribute src {"/js/jquery.sparkline.min.js"}, attribute type {"text/javascript"}, " "},
