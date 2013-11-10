@@ -66,7 +66,7 @@ element script {attribute src {"/js/highcharts.js"}, attribute type {"text/javas
 
 var chart1; // globally available
 $(document).ready(function() {
-      $('.inlinesparkline').sparkline('html', {width: '450'});
+      $('.inlinesparkline').sparkline('html', {width: '650'});
       chart1 = new Highcharts.Chart({
          chart: {
             renderTo: 'chart',
@@ -154,7 +154,7 @@ element form { attribute method {"post"}, attribute action {"/login.xqy"},
         element legend {"Log-in:"},
         element p {element label {attribute for {"username"}, "Username: "}, element br {}, element input {attribute class {"title"}, attribute type {"text"}, attribute name {"username"}}},
         element p {element label {attribute for {"password"}, "Password: "}, element br {}, element input {attribute class {"title"}, attribute type {"password"}, attribute name {"password"}}},
-        element p {element input {attribute type {"submit"}, attribute name {"login"}, attribute value {"Login!"}}} 
+        element p {element input {attribute type {"submit"}, attribute name {"login"}, attribute value {"Login"}}} 
     }
 }
 };
