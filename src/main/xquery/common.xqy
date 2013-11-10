@@ -58,6 +58,7 @@ common:html-page-enclosure($html)
 declare function common:html-head() {
 element title {xdmp:get-session-field("collection"), " : ", $PAGE ," : ", $TITLE},
 element link {attribute rel {"stylesheet"}, attribute type{"text/css"}, attribute href {"http://www.blueprintcss.org/blueprint/screen.css"}},
+element link {attribute rel {"stylesheet"}, attribute type{"text/css"}, attribute href {"/css/page.css"}},
 element script {attribute src {"http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}, attribute type {"text/javascript"}, " "},
 element script {attribute src {"/js/jquery.sparkline.min.js"}, attribute type {"text/javascript"}, " "},
 element script {attribute src {"/js/highcharts.js"}, attribute type {"text/javascript"}, " "},
@@ -66,7 +67,7 @@ element script {attribute src {"/js/highcharts.js"}, attribute type {"text/javas
 
 var chart1; // globally available
 $(document).ready(function() {
-      $('.inlinesparkline').sparkline('html', {width: '650'});
+      $('.inlinesparkline').sparkline('html', {width: '620', height: '50'});
       chart1 = new Highcharts.Chart({
          chart: {
             renderTo: 'chart',

@@ -15,7 +15,7 @@ else (xdmp:get-session-field("collection"))
 
 declare function local:original-zip() {
     element fieldset {
-        element legend {"Download and Export data for: ", $collection},
+        element legend {"Download and Export data for ", $collection},
         for $i in collection($collection)
         where ends-with(xdmp:node-uri($i), ".zip")
         return
@@ -25,7 +25,14 @@ declare function local:original-zip() {
 
 declare function local:common-attributes() {
     element fieldset {
-        element legend {"Common Attributes for : ", $collection}
+        element legend {"Common Attributes for ", $collection},
+        element ul {
+            element li {element strong{"Interval: "}, xs:string(max(collection($collection)/PolarHrmData/Interval))},
+            element li {element strong{"Max HR: "}, xs:string(max(collection($collection)/PolarHrmData/MaxHR))},
+            element li {element strong{"Resting HR: "}, xs:string(max(collection($collection)/PolarHrmData/RestHR))},
+            element li {element strong{"Weight: "}, xs:string(max(collection($collection)/PolarHrmData/Weight))},
+            element li {element strong{"VO2 Max: "}, xs:string(max(collection($collection)/PolarHrmData/VO2max))}
+        }
     }
 };
 
@@ -33,16 +40,18 @@ declare function local:common-attributes() {
 
 declare function local:table(){
 <table>
-<tr>
-<th>Date</th>
-<th>Start Time</th>
-<th>Length</th>
-<!-- th>Max HR</th>
-<th>Resting HR</th>
-<th>Weight</th -->
-<th>Details</th>
-<th>Preview</th>
-</tr>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>Length</th>
+            <!-- th>Max HR</th>
+            <th>Resting HR</th>
+            <th>Weight</th -->
+            <th>Details</th>
+            <th>Preview</th>
+        </tr>
+    </thead>
 {
 for $i in collection($collection)/PolarHrmData/..
 where $i/PolarHrmData/Length gt xs:time("00:01:00")
@@ -51,7 +60,7 @@ return
 <tr>
 <td>{$i/PolarHrmData/Date}</td>
 <td>{$i/PolarHrmData/StartTime}</td>
-<td>{$i/PolarHrmData/Length}</td>
+<td>{if (contains($i/PolarHrmData/Length, ".")) then (fn:substring-before($i/PolarHrmData/Length , ".")) else($i/PolarHrmData/Length)   }</td>
 <!-- td>{$i/PolarHrmData/MaxHR}</td>
 <td>{$i/PolarHrmData/RestHR}</td>
 <td>{$i/PolarHrmData/Weight}</td -->
@@ -68,7 +77,7 @@ element a {attribute href { fn:concat("/detail.xqy?id=", xdmp:node-uri($i)) }}, 
 common:build-page(
 element div {attribute class {"container"},
     common:html-page-header("Polar ProTrainer Tools : Dashboard"),
-    element h3 {"Current Collection: ", $collection},
+    element h3 {"Current Collection: ", element span {attribute class {"maroon"}, $collection}},
     element div {local:original-zip()},
     element div {local:common-attributes()},
     element h3 {"Exercise records:"},
