@@ -67,7 +67,7 @@ element script {attribute src {"/js/highcharts.js"}, attribute type {"text/javas
 
 var chart1; // globally available
 $(document).ready(function() {
-      $('.inlinesparkline').sparkline('html', {width: '620', height: '50'});
+      $('.inlinesparkline').sparkline('html', {width: '640', height: '50'});
       chart1 = new Highcharts.Chart({
          chart: {
             renderTo: 'chart',

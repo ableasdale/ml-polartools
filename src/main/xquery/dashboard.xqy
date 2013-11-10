@@ -15,7 +15,7 @@ else (xdmp:get-session-field("collection"))
 
 declare function local:original-zip() {
     element fieldset {
-        element legend {"Download and Export data for ", $collection},
+        element legend {"Download and Export"},
         for $i in collection($collection)
         where ends-with(xdmp:node-uri($i), ".zip")
         return
@@ -25,7 +25,7 @@ declare function local:original-zip() {
 
 declare function local:common-attributes() {
     element fieldset {
-        element legend {"Common Attributes for ", $collection},
+        element legend {"Common Attributes"},
         element ul {
             element li {element strong{"Interval: "}, xs:string(max(collection($collection)/PolarHrmData/Interval))},
             element li {element strong{"Max HR: "}, xs:string(max(collection($collection)/PolarHrmData/MaxHR))},
@@ -45,9 +45,6 @@ declare function local:table(){
             <th>Date</th>
             <th>Start Time</th>
             <th>Length</th>
-            <!-- th>Max HR</th>
-            <th>Resting HR</th>
-            <th>Weight</th -->
             <th>Details</th>
             <th>Preview</th>
         </tr>
@@ -61,9 +58,6 @@ return
 <td>{$i/PolarHrmData/Date}</td>
 <td>{$i/PolarHrmData/StartTime}</td>
 <td>{if (contains($i/PolarHrmData/Length, ".")) then (fn:substring-before($i/PolarHrmData/Length , ".")) else($i/PolarHrmData/Length)   }</td>
-<!-- td>{$i/PolarHrmData/MaxHR}</td>
-<td>{$i/PolarHrmData/RestHR}</td>
-<td>{$i/PolarHrmData/Weight}</td -->
 <td>{
 element a {attribute href { fn:concat("/detail.xqy?id=", xdmp:node-uri($i)) }}, "Details"
 }
