@@ -35,6 +35,7 @@ declare function local:table(){
 <th>Resting HR</th>
 <th>Weight</th>
 <th>Details</th>
+<th>Preview</th>
 </tr>
 {
 for $i in collection($collection)/PolarHrmData/..
@@ -52,6 +53,7 @@ return
 element a {attribute href { fn:concat("/detail.xqy?id=", xdmp:node-uri($i)) }}, "Details"
 }
 </td>
+<td><span class="inlinesparkline">{ string-join ($i/PolarHrmData/HeartRateReadings/HeartRateReading, ",")}</span></td>
 </tr>
 }
 </table>};

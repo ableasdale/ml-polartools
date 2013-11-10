@@ -62,6 +62,7 @@ element script {attribute src {"/js/highcharts.js"}, attribute type {"text/javas
 
 var chart1; // globally available
 $(document).ready(function() {
+      $('.inlinesparkline').sparkline('html', {width: '450'});
       chart1 = new Highcharts.Chart({
          chart: {
             renderTo: 'chart',
@@ -130,7 +131,7 @@ element div {attribute id {"page-header"},
 declare function common:html-page-footer() as element(div){
 element div {attribute id {"footer"},   
     element hr {},
-    element p {attribute align {"center"}, "ML-PolarTools - Version 0.1 - November 2013"},
+    element p {attribute align {"center"}, "ML-PolarTools - Version 0.2 - November 2013"},
     element hr {}
 }   
 }; 
