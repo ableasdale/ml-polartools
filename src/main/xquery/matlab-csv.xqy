@@ -2,6 +2,7 @@ xquery version "1.0-ml";
 
 declare variable $COLLECTION := xdmp:get-request-field("id", ());
 declare variable $filename := concat($COLLECTION,"-",fn:current-dateTime(),".csv");
+declare variable $CSV-HEADERS := 3;
 
 declare function local:date-as-unix-epoch($date as xs:date) as xs:string {
   xs:string(fn:round(( $date cast as xs:dateTime - xs:dateTime("1970-01-01T00:00:00-00:00")) div xs:dayTimeDuration('PT1S'))) 
@@ -35,6 +36,12 @@ declare function local:matlab-date($date as xs:date) {
     format-date($date, "[D01]-[MNn,*-3]-[Y]", "en", (), ())
 };
 
+declare function local:get-cell-boundaries($collection) as xs:string {
+    string-join( 
+        (xs:string(count(collection($collection)/PolarHrmData)), xs:string( (local:get-largest-reading($collection) + $CSV-HEADERS)))
+        , ",")
+};
+
 (xdmp:set-response-content-type("application/csv"),
 xdmp:add-response-header("Content-Disposition", fn:concat("attachment; filename=", $filename)),
 (
@@ -42,7 +49,7 @@ xdmp:add-response-header("Content-Disposition", fn:concat("attachment; filename=
 let $epoch := local:date-as-epoch(xs:date($y))
 return $epoch
 return string-join($epochs, ","), :)
-
+local:get-cell-boundaries($COLLECTION),
 let $dates := for $y in local:generate-matlab-csv-row($COLLECTION, "Date")
 let $date := local:matlab-date(xs:date($y))
 return $date
