@@ -36,7 +36,7 @@ declare function local:get-params($item){
     return 
     common:create-element(substring-before($line,"="), $xsdate)
     ) else if ( contains(substring-before($line,"="),"Length") or substring-before($line,"=") eq "StartTime")
-    then (common:create-element(substring-before($line,"="), xs:time(substring-after($line,"=")))) 
+    then (common:create-element(substring-before($line,"="), if(substring(substring-after($line,"="),1 ,2)  gt "23") then(xs:time("23:59:59")) else(xs:time(substring-after($line,"="))))) 
     else (common:create-element(substring-before($line,"="),substring-after($line,"=")))
 };
 
