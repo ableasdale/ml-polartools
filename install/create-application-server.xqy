@@ -28,7 +28,8 @@ declare variable $DATABASE-NAME as xs:string := "PolarTools";
 declare function local:create-database() {
     info:database-create($DATABASE-NAME, 1)
 };
-  
+
+(: TODO (FIX) - this assumes the user is admin - so won't do anything if there isn't an admin user configured on the system... :)
 declare function local:create-http-application-server() {
   let $config := admin:get-configuration()
   let $config := admin:database-set-collection-lexicon($config, xdmp:database($DATABASE-NAME), fn:true())
